@@ -50,6 +50,8 @@ class Article
     #[ORM\ManyToMany(targetEntity: MotsCles::class, inversedBy: 'articles')]
     private Collection $motsCles;
 
+
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -281,4 +283,9 @@ class Article
 
         return $this;
     }
+
+
+
+
+
 }

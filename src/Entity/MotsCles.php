@@ -23,6 +23,7 @@ class MotsCles
 
 
 
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -71,6 +72,10 @@ class MotsCles
 
         return $this;
     }
+
+
+
+
 
 
 
