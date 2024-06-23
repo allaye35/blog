@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MotsCles{% endblock %}
+
+{% block body %}
+    <h1>MotsCles</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mots_cle.id }}</td>
+            </tr>
+            <tr>
+                <th>Mot</th>
+                <td>{{ mots_cle.mot }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mots_cles_index') }}">back to list</a>
+
+    <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}">edit</a>
+
+    {{ include('mots_cles/_delete_form.html.twig') }}
+{% endblock %}

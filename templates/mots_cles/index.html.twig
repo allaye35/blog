@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MotsCles index{% endblock %}
+
+{% block body %}
+    <h1>MotsCles index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Mot</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mots_cle in mots_cles %}
+            <tr>
+                <td>{{ mots_cle.id }}</td>
+                <td>{{ mots_cle.mot }}</td>
+                <td>
+                    <a href="{{ path('app_mots_cles_show', {'id': mots_cle.id}) }}">show</a>
+                    <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mots_cles_new') }}">Create new</a>
+{% endblock %}

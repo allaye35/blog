@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Article{% endblock %}
+
+ {% block javascripts %}
+
+
+ {% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ article.titre }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ article.contenu }}</td>
+            </tr>
+            <tr>
+                <th>DateCreation</th>
+                <td>{{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+
+    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+
+    {{ include('article/_delete_form.html.twig') }}
+
+    <form action="{{ path('app_commentaire_new') }}" method="POST">
+        <label for="commentaire">Commentaire :</label>
+        <textarea id="commentaire" name="commentaire" rows="4" cols="50"></textarea>
+
+        <input type="hidden" id="valeur-cachee" name="article" value=" article.getId()">
+
+        <input type="submit" value="Envoyer">
+    </form>
+{% endblock %}

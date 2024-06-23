@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Recherche{% endblock %}
+
+{% block body %}
+
+
+    <form action="{{ path('app_recherche') }}" method="GET">
+        <div>
+            <label for="motsCles">Mot-clé :</label>
+            <input type="text" id="motsCles" name="motsCles" placeholder="Entrez un mot-clé">
+        </div>
+        <button type="submit">Rechercher</button>
+    </form>
+
+
+    <div>
+        {% if lesMotsCles is not empty   %}
+            {% for motcle in lesMotsCles %}
+                motcle {{ motcle.mot }}
+                {% for article in motcle.articles %}
+                    {{ article.titre  }}
+                    {{ article.contenu  }}
+                    {{ article.commentaire  }}
+
+
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}

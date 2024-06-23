@@ -1,0 +1,53 @@
+# Configure les fins de ligne pour différents types de fichiers
+
+# Les fichiers texte utiliseront des fins de ligne LF dans le dépôt, et des fins de ligne CRLF dans la copie de travail sur Windows
+* text=auto
+
+# Spécifique aux fichiers Unix
+*.sh eol=lf
+*.bash eol=lf
+*.zsh eol=lf
+
+# Spécifique aux fichiers Windows
+*.bat eol=crlf
+*.cmd eol=crlf
+
+# Spécifique aux fichiers texte
+*.txt text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+
+# Spécifique aux fichiers de configuration
+*.ini text eol=lf
+*.conf text eol=lf
+*.env text eol=lf
+.env.test text eol=lf
+.gitignore text eol=lf
+bin/phpunit text eol=lf
+bin/console text eol=lf
+
+# Pour les fichiers binaires
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# Pour les fichiers spécifiques à Windows
+*.exe binary
+*.dll binary
+
+# Pour les fichiers spécifiques à Linux/Mac
+*.so binary
