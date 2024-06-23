@@ -27,8 +27,7 @@ class Article
 
 
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    private ?MotsCles $motsCles = null;
+
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
     private Collection $categories;
@@ -43,12 +42,21 @@ class Article
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateCreation = null;
 
+
+
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'motsCles')]
+    private Collection $articles;
+
+    #[ORM\ManyToMany(targetEntity: MotsCles::class, inversedBy: 'articles')]
+    private Collection $motsCles;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->utilisateurs = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
-        $this->mots_cles = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->motsCles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,17 +102,9 @@ class Article
 
 
 
-    public function getMotsCles(): ?MotsCles
-    {
-        return $this->motsCles;
-    }
 
-    public function setMotsCles(?MotsCles $motsCles): static
-    {
-        $this->motsCles = $motsCles;
 
-        return $this;
-    }
+
 
     /**
      * @return Collection<int, Categorie>
@@ -225,6 +225,59 @@ class Article
                 $commentaire->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(self $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(self $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MotsCles>
+     */
+    public function getMotsCles(): Collection
+    {
+        return $this->motsCles;
+    }
+
+    public function addMotsCle(MotsCles $motsCle): static
+    {
+        if (!$this->motsCles->contains($motsCle)) {
+            $this->motsCles->add($motsCle);
+        }
+
+        return $this;
+    }
+
+    public function removeMotsCle(MotsCles $motsCle): static
+    {
+        $this->motsCles->removeElement($motsCle);
 
         return $this;
     }

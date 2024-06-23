@@ -18,8 +18,10 @@ class MotsCles
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mot = null;
 
-    #[ORM\OneToMany(mappedBy: 'motsCles', targetEntity: Article::class)]
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'motsCles')]
     private Collection $articles;
+
+
 
     public function __construct()
     {
@@ -55,7 +57,7 @@ class MotsCles
     {
         if (!$this->articles->contains($article)) {
             $this->articles->add($article);
-            $article->setMotsCles($this);
+            $article->addMotsCle($this);
         }
 
         return $this;
@@ -64,12 +66,14 @@ class MotsCles
     public function removeArticle(Article $article): static
     {
         if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getMotsCles() === $this) {
-                $article->setMotsCles(null);
-            }
+            $article->removeMotsCle($this);
         }
 
         return $this;
     }
+
+
+
+
+
 }
