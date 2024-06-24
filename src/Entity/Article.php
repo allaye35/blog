@@ -19,6 +19,10 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 

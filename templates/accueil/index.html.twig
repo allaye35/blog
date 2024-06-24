@@ -2,76 +2,30 @@
 
 {% block title %}Hello Accueil{% endblock %}
 
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Bienvenue sur My Blog</h1>
+        <p class="lead">Découvrez les derniers articles et insights.</p>
+    </div>
 
+    <div class="container">
+        <div class="row">
+            {% for article in articles %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.getTitre() }}</h5>
+                            <p class="card-text">{{ article.getContenu()|slice(0, 100) ~ '...' }}</p>
+                            <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Lire la suite</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
-
-    {% block body %}
-        {% block head %}
-            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Home</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_article_index') }}">Articles <span class="sr-only"></span></a>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_role_index') }}">Rôles</a>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_utilisateur_index') }}">Utilisateurs</a>
-
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                        <a class="nav-link" href="{{ path('app_commentaire_index') }}">Commentaires</a>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_mots_cles_index') }}">Mots-clés</a>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_utilisateur_new') }}">Créer votre compte</a>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                        <a class="nav-link" href="{{ path('app_recherche') }}">Rechercher</a>
-                    </button>
-                </li>
-
-                {% if app.user %}
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link  rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">
-                            <a class="nav link" href="{{ path('app_logout') }}"> Déconnexion</a>
-                        </button>
-                    </li>
-                {% else %}
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link  rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" >
-                            <a class="nav link" href="{{ path('app_login') }} ">Connexion</a>
-                        </button>
-                    </li>
-                {% endif %}
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Contact</button>
-                </li>
-
-            </ul>
-
-        {% endblock %}
-
-
-
-
-    {% endblock %}
-
+    <footer class="footer bg-dark text-white text-center mt-4 py-3" id="contact">
+        <p>Contact us at: contact@myblog.com</p>
+        <p>&copy; {{ "now"|date("Y") }} My Blog. All Rights Reserved.</p>
+    </footer>
+{% endblock %}

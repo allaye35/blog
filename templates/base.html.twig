@@ -1,33 +1,84 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
-        <script src="{{ asset('assets/showdown/dist/showdown.min.js') }}"></script>
-        <script>
-            function convertirMarkdownEnHtml(markdown) {
-                const convertisseur = new showdown.Converter();
-                return convertisseur.makeHtml(markdown);
-            }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('app_accueil') }}">My Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_accueil') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_article_index') }}">Articles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_role_index') }}">Rôles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_utilisateur_index') }}">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_commentaire_index') }}">Commentaires</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_mots_cles_index') }}">Mots-clés</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_utilisateur_new') }}">Créer votre compte</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_recherche') }}">Rechercher</a>
+            </li>
+            {% if app.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-            const texteMarkdown = '# Bonjour, *monde* !';
-            const texteHtml = convertirMarkdownEnHtml(texteMarkdown);
-            console.log(texteHtml);
+<div class="container mt-4">
+    {% block body %}{% endblock %}
+</div>
 
-        </script>
+<footer class="footer bg-dark text-white text-center mt-4 py-3">
+    <p>&copy; {{ "now"|date("Y") }} My Blog. All Rights Reserved.</p>
+</footer>
 
-        {% block stylesheets %}
-        {% endblock %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets/showdown/dist/showdown.min.js') }}"></script>
+<script>
+    function convertirMarkdownEnHtml(markdown) {
+        const convertisseur = new showdown.Converter();
+        return convertisseur.makeHtml(markdown);
+    }
 
-        {% block javascripts %}
-
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    const texteMarkdown = '# Bonjour, *monde* !';
+    const texteHtml = convertirMarkdownEnHtml(texteMarkdown);
+    console.log(texteHtml);
+</script>
+{% block javascripts %}{% endblock %}
+</body>
 </html>
