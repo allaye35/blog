@@ -1,8 +1,5 @@
-/* styles.css */
-
 body {
-    background-color: #f8f9fa;
-    color: #343a40;
+    font-family: 'Arial', sans-serif;
 }
 
 .navbar {
@@ -10,21 +7,41 @@ body {
 }
 
 .jumbotron {
-    background-color: #343a40;
-    color: white;
+    background-color: #f8f9fa;
     padding: 2rem 1rem;
 }
 
-.card {
+.card-title {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #007bff;
     border: none;
 }
 
-.card-title {
-    color: #007bff;
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.form-control {
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
 }
 
-.footer {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
 }

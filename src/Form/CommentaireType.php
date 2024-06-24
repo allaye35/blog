@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Article;
 use App\Entity\Commentaire;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +19,8 @@ class CommentaireType extends AbstractType
     {
         $builder
             ->add('commentaire', TextareaType::class, [
-                'label' => 'commentaire ',
+                'label' => 'Commentaire',
+                'attr' => ['class' => 'form-control'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le commentaire ne peut pas être vide.',
@@ -36,8 +39,12 @@ class CommentaireType extends AbstractType
                 ],
             ])
 //            ->add('utilisateur')
-            ->add('article')
-        ;
+            ->add('article', EntityType::class, [
+                'class' => Article::class,
+                'choice_label' => 'titre',
+                'label' => 'Article',
+                'attr' => ['class' => 'form-control'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

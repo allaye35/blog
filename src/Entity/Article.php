@@ -289,7 +289,10 @@ class Article
     }
 
 
-
+    public function __toString(): string
+    {
+        return $this->getTitre();
+    }
 
 
 }

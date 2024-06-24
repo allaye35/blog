@@ -3,12 +3,12 @@
 {% block title %}Hello Accueil{% endblock %}
 
 {% block body %}
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Bienvenue sur My Blog</h1>
-        <p class="lead">Découvrez les derniers articles et insights.</p>
-    </div>
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Bienvenue sur My Blog</h1>
+            <p class="lead">Découvrez les derniers articles et insights.</p>
+        </div>
 
-    <div class="container">
         <div class="row">
             {% for article in articles %}
                 <div class="col-md-4">
@@ -23,9 +23,4 @@
             {% endfor %}
         </div>
     </div>
-
-    <footer class="footer bg-dark text-white text-center mt-4 py-3" id="contact">
-        <p>Contact us at: contact@myblog.com</p>
-        <p>&copy; {{ "now"|date("Y") }} My Blog. All Rights Reserved.</p>
-    </footer>
 {% endblock %}

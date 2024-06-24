@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Commentaire{% endblock %}
+{% block title %}Créer un nouveau commentaire{% endblock %}
 
 {% block body %}
-    <h1>Create new Commentaire</h1>
-
-    {{ include('commentaire/_form.html.twig') }}
-
-    <a href="{{ path('app_commentaire_index') }}">back to list</a>
+    <div class="container mt-4">
+        <h1 class="display-4">Créer un nouveau Commentaire</h1>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.commentaire) }}
+            {{ form_widget(form.commentaire, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.commentaire) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.article) }}
+            {{ form_widget(form.article, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.article) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        {{ form_end(form) }}
+        <a href="{{ path('app_commentaire_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    </div>
 {% endblock %}
