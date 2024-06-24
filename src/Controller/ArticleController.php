@@ -36,7 +36,22 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer l'utilisateur courant
+            $user = $this->getUser();
+            // Vérifier que l'utilisateur est connecté
+            if (!$user) {
+                // Rediriger ou afficher un message d'erreur approprié
+                $this->addFlash('error', 'Vous devez être connecté pour créer un article.');
+                return $this->redirectToRoute('app_login');
+            }
+
+            // Associer l'utilisateur courant à l'article
+            $article->setUtilisateur($user);
+
             $article->setUtilisateur($this->getUser());
+            // Associer l'email de l'utilisateur courant à l'article
+            $email = $user->getEmail();
+            $article->setEmail($email);
 //            $article->addUtilisateur($this->getUser());
             $article->setDateCreation(new \DateTime());
             $motsCles = explode(',', $article->getMotsCles());
