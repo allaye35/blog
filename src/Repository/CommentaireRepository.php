@@ -53,4 +53,13 @@ class CommentaireRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function remove(Commentaire $entity, bool $flush = false): void
+    {
+        $this->_em->remove($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+
 }

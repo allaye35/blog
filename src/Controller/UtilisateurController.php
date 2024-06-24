@@ -32,7 +32,7 @@ class UtilisateurController extends AbstractController
     {
         // Création d'un nouvel utilisateur
         $utilisateur = new Utilisateur();
-
+        $utilisateur->setDateCreationUtilisateur(new \DateTime());
         // Création et gestion du formulaire
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
@@ -52,6 +52,7 @@ class UtilisateurController extends AbstractController
         return $this->renderForm('utilisateur/new.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
+            'is_edit' => false,
         ]);
     }
 
@@ -94,6 +95,7 @@ class UtilisateurController extends AbstractController
         return $this->renderForm('utilisateur/edit.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
+            'is_edit' => false,
         ]);
     }
 

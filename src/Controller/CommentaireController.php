@@ -6,6 +6,7 @@ use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,8 +21,15 @@ class CommentaireController extends AbstractController
     #[Route('/', name: 'app_commentaire_index', methods: ['GET'])]
     public function index(CommentaireRepository $commentaireRepository): Response
     {
+        $commentaires = $commentaireRepository->findAll();
+        $deleteForms = [];
+        foreach ($commentaires as $commentaire) {
+            $deleteForms[$commentaire->getId()] = $this->createDeleteForm($commentaire)->createView();
+        }
+
         return $this->render('commentaire/index.html.twig', [
-            'commentaires' => $commentaireRepository->findAll(),
+            'commentaires' => $commentaires,
+            'delete_forms' => $deleteForms,
         ]);
     }
 
@@ -48,8 +56,11 @@ class CommentaireController extends AbstractController
     #[Route('/{id}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
     {
+        $deleteForm = $this->createDeleteForm($commentaire);
+
         return $this->render('commentaire/show.html.twig', [
             'commentaire' => $commentaire,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -79,5 +90,18 @@ class CommentaireController extends AbstractController
         }
 
         return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createDeleteForm(Commentaire $commentaire)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('app_commentaire_delete', ['id' => $commentaire->getId()]))
+            ->setMethod('DELETE')
+            ->add('delete', SubmitType::class, [
+                'label' => 'Delete',
+                'attr' => ['class' => 'btn btn-danger']
+            ])
+            ->getForm()
+            ;
     }
 }

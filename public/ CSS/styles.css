@@ -2,30 +2,27 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-.navbar {
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
     margin-bottom: 20px;
 }
 
-.jumbotron {
-    background-color: #f8f9fa;
-    padding: 2rem 1rem;
-}
-
-.card-title {
-    font-weight: bold;
-}
-
-.btn-primary {
+.card-header {
     background-color: #007bff;
-    border: none;
+    color: white;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+.table {
+    margin-bottom: 0;
 }
-.form-control {
-    margin-bottom: 1rem;
-    border-radius: 0.25rem;
+
+.table th, .table td {
+    vertical-align: middle;
 }
 
 .btn-primary {
@@ -44,4 +41,40 @@ body {
 
 .btn-secondary:hover {
     background-color: #5a6268;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    color: #212529;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* custom.css */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-actions {
+    display: flex;
+    gap: 0.5rem;
 }

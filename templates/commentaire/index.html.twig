@@ -1,17 +1,12 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Commentaire index{% endblock %}
-
-{% block body %}
-    <h1>Commentaire index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Commentaire</th>
-                <th>actions</th>
-            </tr>
+<div class="container mt-4">
+    <h2>Commentaires</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Commentaire</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for commentaire in commentaires %}
@@ -19,17 +14,15 @@
                 <td>{{ commentaire.id }}</td>
                 <td>{{ commentaire.commentaire }}</td>
                 <td>
-                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
+                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-primary btn-sm">Afficher</a>
+                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    {{ form_start(delete_forms[commentaire.id], {'attr': {'style': 'display:inline'}}) }}
+                    <input type="submit" value="Supprimer" class="btn btn-danger btn-sm">
+                    {{ form_end(delete_forms[commentaire.id]) }}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_commentaire_new') }}">Create new</a>
-{% endblock %}
+    <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
+</div>

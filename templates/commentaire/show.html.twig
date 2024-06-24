@@ -1,26 +1,28 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Commentaire{% endblock %}
-
-{% block body %}
-    <h1>Commentaire</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ commentaire.id }}</td>
-            </tr>
-            <tr>
-                <th>Commentaire</th>
-                <td>{{ commentaire.commentaire }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_commentaire_index') }}">back to list</a>
-
-    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
-
-    {{ include('commentaire/_delete_form.html.twig') }}
-{% endblock %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Commentaire</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Id</th>
+                    <td>{{ commentaire.id }}</td>
+                </tr>
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ commentaire.commentaire }}</td>
+                </tr>
+            </table>
+            <div class="d-flex justify-content-between">
+                <a href="{{ path('app_commentaire_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                <div>
+                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning">Modifier</a>
+                    {{ form_start(delete_form, {'attr': {'style': 'display:inline'}}) }}
+                    <input type="submit" value="Supprimer" class="btn btn-danger">
+                    {{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

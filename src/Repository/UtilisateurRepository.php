@@ -53,4 +53,11 @@ class UtilisateurRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function remove(Utilisateur $utilisateur, bool $flush = false): void
+    {
+        $this->_em->remove($utilisateur);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
 }
