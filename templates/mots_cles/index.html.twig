@@ -1,35 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MotsCles index{% endblock %}
+{% block title %}Liste des mots-clés{% endblock %}
 
 {% block body %}
-    <h1>MotsCles index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container mt-4">
+        <h1>Liste des mots-clés</h1>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Mot</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for mots_cle in mots_cles %}
-            <tr>
-                <td>{{ mots_cle.id }}</td>
-                <td>{{ mots_cle.mot }}</td>
-                <td>
-                    <a href="{{ path('app_mots_cles_show', {'id': mots_cle.id}) }}">show</a>
-                    <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_mots_cles_new') }}">Create new</a>
+            </thead>
+            <tbody>
+            {% for mots_cle in mots_cles %}
+                <tr>
+                    <td>{{ mots_cle.id }}</td>
+                    <td>{{ mots_cle.mot }}</td>
+                    <td>
+                        <a href="{{ path('app_mots_cles_show', {'id': mots_cle.id}) }}" class="btn btn-info btn-sm">Afficher</a>
+                        <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <form method="post" action="{{ path('app_mots_cles_delete', {'id': mots_cle.id}) }}" style="display:inline-block" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ mots_cle.id) }}">
+                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_mots_cles_new') }}" class="btn btn-success">Créer un nouveau mot-clé</a>
+    </div>
 {% endblock %}

@@ -3,10 +3,10 @@
 {% block title %}MotsCles{% endblock %}
 
 {% block body %}
-    <h1>MotsCles</h1>
-
-    <table class="table">
-        <tbody>
+    <div class="container mt-4">
+        <h1>MotsCles</h1>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ mots_cle.id }}</td>
@@ -15,12 +15,13 @@
                 <th>Mot</th>
                 <td>{{ mots_cle.mot }}</td>
             </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_mots_cles_index') }}">back to list</a>
-
-    <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}">edit</a>
-
-    {{ include('mots_cles/_delete_form.html.twig') }}
+            </tbody>
+        </table>
+        <a href="{{ path('app_mots_cles_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_mots_cles_edit', {'id': mots_cle.id}) }}" class="btn btn-primary">Modifier</a>
+        <form method="post" action="{{ path('app_mots_cles_delete', {'id': mots_cle.id}) }}" style="display:inline-block" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ mots_cle.id) }}">
+            <button class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
 {% endblock %}

@@ -53,4 +53,13 @@ class RoleRepository extends ServiceEntityRepository
                 $this->_em->flush();
             }
         }
+
+    public function remove(Role $role, bool $flush = false): void
+    {
+        $this->_em->remove($role);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
 }

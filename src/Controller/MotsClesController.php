@@ -20,8 +20,14 @@ class MotsClesController extends AbstractController
     #[Route('/', name: 'app_mots_cles_index', methods: ['GET'])]
     public function index(MotsClesRepository $motsClesRepository): Response
     {
+        $motsCles = $motsClesRepository->findAll();
+        $deleteForms = [];
+        foreach ($motsCles as $motsCle) {
+            $deleteForms[$motsCle->getId()] = $this->createDeleteForm($motsCle)->createView();
+        }
         return $this->render('mots_cles/index.html.twig', [
-            'mots_cles' => $motsClesRepository->findAll(),
+            'mots_cles' => $motsCles,
+            'delete_forms' => $deleteForms,
         ]);
     }
 
@@ -41,14 +47,18 @@ class MotsClesController extends AbstractController
         return $this->renderForm('mots_cles/new.html.twig', [
             'mots_cle' => $motsCle,
             'form' => $form,
+            'is_edit' => false,
         ]);
     }
 
     #[Route('/{id}', name: 'app_mots_cles_show', methods: ['GET'])]
     public function show(MotsCles $motsCle): Response
     {
+        $deleteForm = $this->createDeleteForm($motsCle);
+
         return $this->render('mots_cles/show.html.twig', [
             'mots_cle' => $motsCle,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -64,19 +74,31 @@ class MotsClesController extends AbstractController
             return $this->redirectToRoute('app_mots_cles_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $deleteForm = $this->createDeleteForm($motsCle);
+
         return $this->renderForm('mots_cles/edit.html.twig', [
             'mots_cle' => $motsCle,
             'form' => $form,
+            'is_edit' => true,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
     #[Route('/{id}', name: 'app_mots_cles_delete', methods: ['POST'])]
     public function delete(Request $request, MotsCles $motsCle, MotsClesRepository $motsClesRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$motsCle->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $motsCle->getId(), $request->request->get('_token'))) {
             $motsClesRepository->remove($motsCle, true);
         }
 
         return $this->redirectToRoute('app_mots_cles_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createDeleteForm(MotsCles $motsCle)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('app_mots_cles_delete', ['id' => $motsCle->getId()]))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 }

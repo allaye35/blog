@@ -78,3 +78,35 @@ body {
     display: flex;
     gap: 0.5rem;
 }
+/* public/css/app.css */
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    margin-left: 10px;
+}
+
+.list-group {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    font-size: 1.2em;
+}

@@ -53,4 +53,11 @@ class MotsClesRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function remove(MotsCles $motsCle, bool $flush = false): void
+    {
+        $this->_em->remove($motsCle);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
 }

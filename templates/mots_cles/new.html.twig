@@ -1,11 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New MotsCles{% endblock %}
+{% block title %}Create new MotsCles{% endblock %}
 
 {% block body %}
-    <h1>Create new MotsCles</h1>
+    <div class="container mt-4">
+        <h1>Créer un mot-clé</h1>
 
-    {{ include('mots_cles/_form.html.twig') }}
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.mot) }}
+            {{ form_widget(form.mot, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.mot) }}
+        </div>
 
-    <a href="{{ path('app_mots_cles_index') }}">back to list</a>
+        <div class="form-group">
+            {{ form_label(form.articles) }}
+            {{ form_widget(form.articles, {'attr': {'class': 'form-control selectpicker', 'multiple': 'multiple', 'data-live-search': 'true'}}) }}
+            {{ form_errors(form.articles) }}
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success">{{ is_edit ? 'Modifier' : 'Créer' }}</button>
+            <a href="{{ path('app_mots_cles_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
 {% endblock %}
