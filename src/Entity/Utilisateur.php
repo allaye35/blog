@@ -72,20 +72,24 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        // Extraire les descriptions des rôles
+        $roles = $this->roles->map(function($role) {
+            return $role->getDescription(); // Utilisez la méthode getDescription() de l'entité Role
+        })->toArray();
+
         $roles[] = 'ROLE_USER';
+
         return array_unique($roles);
     }
 
-    public function addRole(Role $role): static
+    public function addRole(Role $role): self
     {
         if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
+            $this->roles[] = $role;
         }
 
         return $this;
     }
-
     public function removeRole(Role $role): static
     {
         $this->roles->removeElement($role);
