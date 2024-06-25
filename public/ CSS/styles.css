@@ -4,25 +4,23 @@ body {
 
 .container {
     margin-top: 20px;
+    max-width: 900px;
+    margin: auto;
 }
 
-.card {
-    border-radius: 0.5rem;
-    overflow: hidden;
+h2 {
     margin-bottom: 20px;
-}
-
-.card-header {
-    background-color: #007bff;
-    color: white;
+    text-align: center;
+    color: #007bff;
 }
 
 .table {
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
-.table th, .table td {
-    vertical-align: middle;
+.thead-dark th {
+    background-color: #343a40;
+    color: white;
 }
 
 .btn-primary {
@@ -64,49 +62,34 @@ body {
     background-color: #c82333;
 }
 
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
 .form-control {
     margin-bottom: 1rem;
     border-radius: 0.25rem;
 }
 
-/* custom.css */
-.table th, .table td {
-    vertical-align: middle;
+.text-center {
+    text-align: center;
 }
 
-.table-actions {
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.button-group {
     display: flex;
-    gap: 0.5rem;
-}
-/* public/css/app.css */
-
-.container {
-    max-width: 800px;
-    margin: auto;
-}
-
-h1, h2 {
-    margin-bottom: 20px;
-}
-
-.form-inline {
-    display: flex;
-    align-items: center;
-}
-
-.form-group {
-    display: flex;
-    align-items: center;
-}
-
-.form-control {
-    margin-left: 10px;
-}
-
-.list-group {
-    margin-top: 20px;
-}
-
-.list-group-item {
-    font-size: 1.2em;
+    gap: 1rem;
 }

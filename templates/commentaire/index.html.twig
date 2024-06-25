@@ -1,11 +1,15 @@
-<div class="container mt-4">
-    <h2>Commentaires</h2>
-    <table class="table table-bordered table-striped">
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Commentaires{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">Liste des Commentaires</h2>
+    <table class="table table-bordered table-striped table-hover">
         <thead class="thead-dark">
         <tr>
             <th>Id</th>
             <th>Commentaire</th>
-            <th>Actions</th>
+            <th class="text-center">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -13,16 +17,15 @@
             <tr>
                 <td>{{ commentaire.id }}</td>
                 <td>{{ commentaire.commentaire }}</td>
-                <td>
-                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-primary btn-sm">Afficher</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
-                    {{ form_start(delete_forms[commentaire.id], {'attr': {'style': 'display:inline'}}) }}
-                    <input type="submit" value="Supprimer" class="btn btn-danger btn-sm">
-                    {{ form_end(delete_forms[commentaire.id]) }}
+                <td class="text-center">
+                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-info btn-sm mx-1">Afficher</a>
+                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm mx-1">Modifier</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
-</div>
+    <div class="text-center">
+        <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
+    </div>
+{% endblock %}
