@@ -8,19 +8,29 @@ body {
     margin: auto;
 }
 
-h2 {
+.card {
     margin-bottom: 20px;
-    text-align: center;
-    color: #007bff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-bottom: 1px solid #007bff;
+}
+
+.card-body {
+    padding: 20px;
 }
 
 .table {
     margin-bottom: 20px;
 }
 
-.thead-dark th {
-    background-color: #343a40;
-    color: white;
+.table th, .table td {
+    vertical-align: middle;
 }
 
 .btn-primary {
@@ -62,25 +72,10 @@ h2 {
     background-color: #c82333;
 }
 
-.btn-success {
-    background-color: #28a745;
-    border: none;
-    color: white;
-}
-
-.btn-success:hover {
-    background-color: #218838;
+.form-group {
+    margin-bottom: 1rem;
 }
 
 .form-control {
-    margin-bottom: 1rem;
     border-radius: 0.25rem;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f1f1f1;
 }

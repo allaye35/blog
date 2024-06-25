@@ -1,49 +1,51 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}Article{% endblock %}
 
- {% block javascripts %}
-
-
- {% endblock %}
-
 {% block body %}
-    <h1>Article</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ article.titre }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ article.contenu }}</td>
-            </tr>
-            <tr>
-                <th>DateCreation</th>
-                <td>{{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_article_index') }}">back to list</a>
-
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-
-    {{ include('article/_delete_form.html.twig') }}
-
-    <form action="{{ path('app_commentaire_new') }}" method="POST">
-        <label for="commentaire">Commentaire :</label>
-        <textarea id="commentaire" name="commentaire" rows="4" cols="50"></textarea>
-
-        <input type="hidden" id="valeur-cachee" name="article" value=" article.getId()">
-
-        <input type="submit" value="Envoyer">
-    </form>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Article</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ article.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ article.titre }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contenu</th>
+                        <td>{{ article.contenu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de Création</th>
+                        <td>{{ article.dateCreation|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                </table>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                    <div>
+                        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning">Modifier</a>
+                        {{ form_start(delete_form, {'attr': {'style': 'display:inline'}}) }}
+                        <input type="submit" value="Supprimer" class="btn btn-danger">
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+                <hr>
+                <h4>Commentaires</h4>
+                {{ form_start(comment_form) }}
+                <div class="form-group">
+                    {{ form_label(comment_form.commentaire) }}
+                    {{ form_widget(comment_form.commentaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+                {{ form_end(comment_form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

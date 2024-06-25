@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,50 +24,27 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
+        $articles = $articleRepository->findAll();
+        $deleteForms = [];
+
+        foreach ($articles as $article) {
+            $deleteForms[$article->getId()] = $this->createDeleteForm($article)->createView();
+        }
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
+            'delete_forms' => $deleteForms,
         ]);
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ArticleRepository $articleRepository,MotsClesRepository $motsClesRepository): Response
+    public function new(Request $request, ArticleRepository $articleRepository): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer l'utilisateur courant
-            $user = $this->getUser();
-            // Vérifier que l'utilisateur est connecté
-            if (!$user) {
-                // Rediriger ou afficher un message d'erreur approprié
-                $this->addFlash('error', 'Vous devez être connecté pour créer un article.');
-                return $this->redirectToRoute('app_login');
-            }
-
-            // Associer l'utilisateur courant à l'article
-            $article->setUtilisateur($user);
-
-            $article->setUtilisateur($this->getUser());
-            // Associer l'email de l'utilisateur courant à l'article
-            $email = $user->getEmail();
-            $article->setEmail($email);
-//            $article->addUtilisateur($this->getUser());
-            $article->setDateCreation(new \DateTime());
-            $motsCles = explode(',', $article->getMotsCles());
-            foreach ($motsCles as $mots) {
-                // Vérifier si le mot existe déjà dans la base de données
-                $motExistant = $motsClesRepository->findOneBy(['mot' => $mots]);
-                if (!$motExistant) {
-                    // Si le mot n'existe pas, créez un nouvel objet Mot et enregistrez-le dans la base de données
-                    $nouveauMot = new MotsCles();
-                    $nouveauMot->setMot($mots);
-                    $motsClesRepository->save($nouveauMot,true);
-                    $article->addMotsCle($nouveauMot);
-
-                }
-            }
             $articleRepository->save($article, true);
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
@@ -81,8 +59,11 @@ class ArticleController extends AbstractController
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article): Response
     {
+        $deleteForm = $this->createDeleteForm($article);
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -114,5 +95,15 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
+    private function createDeleteForm(Article $article)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('app_article_delete', ['id' => $article->getId()]))
+            ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => 'Supprimer',
+                'attr' => ['class' => 'btn btn-danger btn-sm mx-1']
+            ])
+            ->getForm();
+    }
 }

@@ -1,39 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article index{% endblock %}
+{% block title %}Liste des Articles{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container mt-4">
+        <h2 class="text-center">Liste des Articles</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
                 <th>Contenu</th>
-                <th>DateCreation</th>
-                <th>actions</th>
+                <th>Date de Création</th>
+                <th class="text-center">Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.titre }}</td>
-                <td>{{ article.contenu }}</td>
-                <td>{{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_article_new') }}">Create new</a>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.titre }}</td>
+                    <td>{{ article.contenu }}</td>
+                    <td>{{ article.dateCreation|date('Y-m-d H:i:s') }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-info btn-sm mx-1">Afficher</a>
+                        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning btn-sm mx-1">Modifier</a>
+                        {{ form_start(delete_forms[article.id], {'attr': {'style': 'display:inline'}}) }}
+                        <input type="submit" value="Supprimer" class="btn btn-danger btn-sm mx-1">
+                        {{ form_end(delete_forms[article.id]) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a href="{{ path('app_article_new') }}" class="btn btn-success">Créer un nouvel article</a>
+        </div>
+    </div>
 {% endblock %}
