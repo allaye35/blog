@@ -59,27 +59,17 @@ class ArticleType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('MotsCles', TextareaType::class, [
-                'label' => 'MotsCles en Markdown',
+            ->add('motsCles', EntityType::class, [
+                'class' => MotsCles::class,
+                'choice_label' => 'mot',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'Mots Clés',
+            ])
+            ->add('nouveauMotCle', TextType::class, [
+                'label' => 'Ajouter un nouveau mot clé',
                 'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Le MotsCles ne peut pas être vide.',
-                    ]),
-                    new Length([
-                        'min' => 1,
-                        'max' => 1000,
-                        'minMessage' => 'Le MotsCles doit contenir au moins {{ limit }} caractères.',
-                        'maxMessage' => 'Le MotsCles doit contenir au maximum {{ limit }} caractères.',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^.*$/s',
-                        'message' => 'Le MotsCles Markdown est invalide.',
-                        'match' => true,
-
-                    ]),
-                ],
+                'mapped' => false, // Ne pas mapper ce champ à l'entité
             ])
 
 //        ->add('dateCreation', DateTimeType::class, [
@@ -108,13 +98,7 @@ class ArticleType extends AbstractType
 //                // Autres options éventuelles pour le champ...
 //            ])
 
-            ->add('motsCles', EntityType::class, [
-                'class' => MotsCles::class,
-                'choice_label' => 'mot',
-                'multiple' => true,
-                'expanded' => false,
-                'label' => 'Mots Clés',
-            ]);
+
         ;
     }
 

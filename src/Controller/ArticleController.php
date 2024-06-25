@@ -19,6 +19,8 @@ use App\Repository\CommentaireRepository;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 
+use Symfony\Component\Security\Core\Security as UserSecurity;
+
 #[Route('/article')]
 #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
 class ArticleController extends AbstractController
@@ -40,13 +42,39 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ArticleRepository $articleRepository): Response
+    public function new(Request $request, ArticleRepository $articleRepository, MotsClesRepository $motsClesRepository): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération des mots-clés du formulaire
+            $motsCles = $form->get('motsCles')->getData();
+            $nouveauMotCle = $form->get('nouveauMotCle')->getData();
+
+            // Ajouter les mots-clés existants à l'article
+            foreach ($motsCles as $motCle) {
+                $article->addMotsCle($motCle);
+            }
+
+            // Ajouter un nouveau mot-clé s'il est renseigné
+            if (!empty($nouveauMotCle)) {
+                $motCle = new MotsCles();
+                $motCle->setMot($nouveauMotCle);
+                $motsClesRepository->save($motCle, true);
+                $article->addMotsCle($motCle);
+            }
+
+            // Définir la date de création
+            $article->setDateCreation(new \DateTime());
+
+            // Définir l'email de l'utilisateur connecté
+            $user = $this->getUser();
+            if ($user) {
+                $article->setEmail($user->getEmail());
+            }
+
             $articleRepository->save($article, true);
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
@@ -59,25 +87,13 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, Article $article, CommentaireRepository $commentaireRepository): Response
+    public function show(Request $request, Article $article): Response
     {
-        $commentaire = new Commentaire();
-        $comment_form = $this->createForm(CommentaireType::class, $commentaire);
-        $comment_form->handleRequest($request);
-
-        if ($comment_form->isSubmitted() && $comment_form->isValid()) {
-            $commentaire->setArticle($article);
-            $commentaireRepository->save($commentaire, true);
-
-            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
-        }
-
         $delete_form = $this->createDeleteForm($article);
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'delete_form' => $delete_form->createView(),
-            'comment_form' => $comment_form->createView(),
         ]);
     }
 
