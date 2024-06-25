@@ -3,29 +3,34 @@
 {% block title %}Liste des Commentaires{% endblock %}
 
 {% block body %}
-    <h2 class="text-center">Liste des Commentaires</h2>
-    <table class="table table-bordered table-striped table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>Id</th>
-            <th>Commentaire</th>
-            <th class="text-center">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for commentaire in commentaires %}
+    <div class="container mt-4">
+        <h2 class="text-center">Liste des Commentaires</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
             <tr>
-                <td>{{ commentaire.id }}</td>
-                <td>{{ commentaire.commentaire }}</td>
-                <td class="text-center">
-                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-info btn-sm mx-1">Afficher</a>
-                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm mx-1">Modifier</a>
-                </td>
+                <th>Id</th>
+                <th>Commentaire</th>
+                <th class="text-center">Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="text-center">
-        <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
+            </thead>
+            <tbody>
+            {% for commentaire in commentaires %}
+                <tr>
+                    <td>{{ commentaire.id }}</td>
+                    <td>{{ commentaire.commentaire }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-info btn-sm mx-1">Afficher</a>
+                        <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm mx-1">Modifier</a>
+                        {{ form_start(delete_forms[commentaire.id], {'attr': {'style': 'display:inline'}}) }}
+                        <input type="submit" value="Supprimer" class="btn btn-danger btn-sm mx-1">
+                        {{ form_end(delete_forms[commentaire.id]) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
+        </div>
     </div>
 {% endblock %}

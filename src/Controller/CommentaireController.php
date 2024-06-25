@@ -23,6 +23,7 @@ class CommentaireController extends AbstractController
     {
         $commentaires = $commentaireRepository->findAll();
         $deleteForms = [];
+
         foreach ($commentaires as $commentaire) {
             $deleteForms[$commentaire->getId()] = $this->createDeleteForm($commentaire)->createView();
         }
@@ -97,11 +98,10 @@ class CommentaireController extends AbstractController
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('app_commentaire_delete', ['id' => $commentaire->getId()]))
             ->setMethod('DELETE')
-            ->add('delete', SubmitType::class, [
-                'label' => 'Delete',
-                'attr' => ['class' => 'btn btn-danger']
+            ->add('submit', SubmitType::class, [
+                'label' => 'Supprimer',
+                'attr' => ['class' => 'btn btn-danger btn-sm mx-1']
             ])
-            ->getForm()
-            ;
+            ->getForm();
     }
 }
