@@ -49,15 +49,6 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Assigner l'utilisateur connecté comme créateur de l'article
-            $user = $this->getUser();
-            if ($user) {
-                $article->setEmail($user->getEmail());
-            }
-
-            // Assigner la date de création
-            $article->setDateCreation(new \DateTime());
-
             // Récupération des mots-clés du formulaire
             $motsCles = $form->get('motsCles')->getData();
             $nouveauMotCle = $form->get('nouveauMotCle')->getData();
@@ -94,6 +85,10 @@ class ArticleController extends AbstractController
         $comment_form->handleRequest($request);
 
         if ($comment_form->isSubmitted() && $comment_form->isValid()) {
+            // Associer l'utilisateur connecté au commentaire
+            /** @var Utilisateur $user */
+            $user = $this->getUser();
+            $commentaire->setUtilisateur($user);
             $commentaire->setArticle($article);
             $commentaireRepository->save($commentaire, true);
 

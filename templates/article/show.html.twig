@@ -8,7 +8,7 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>Titre</th>
+            <th>Title</th>
             <td>{{ article.titre }}</td>
         </tr>
         <tr>
@@ -18,7 +18,26 @@
         </tbody>
     </table>
 
-    <h4>Commentaires</h4>
+    <h5>Commentaires</h5>
+    <div class="card-body">
+        {% for commentaire in article.commentaires %}
+            <div class="mb-3">
+                {% if commentaire.utilisateurs|length > 0 %}
+                    {% for utilisateur in commentaire.utilisateurs %}
+                        <strong>{{ utilisateur.email }}</strong> :
+                    {% endfor %}
+                {% else %}
+                    <strong>Utilisateur inconnu</strong> :
+                {% endif %}
+                <p>{{ commentaire.commentaire }}</p>
+                <hr>
+            </div>
+        {% else %}
+            <p>Aucun commentaire pour cet article.</p>
+        {% endfor %}
+    </div>
+
+    <h4>Ajouter un commentaire</h4>
     {{ form_start(comment_form) }}
     <div class="form-group">
         {{ form_label(comment_form.commentaire) }}
@@ -27,5 +46,5 @@
     <button type="submit" class="btn btn-primary">Envoyer</button>
     {{ form_end(comment_form) }}
 
-    <a href="{{ path('app_article_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_article_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
 {% endblock %}

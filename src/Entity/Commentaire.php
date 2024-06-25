@@ -84,10 +84,10 @@ class Commentaire
     /**
      * @return Collection<int, Utilisateur>
      */
-//    public function getUtilisateurs(): Collection
-//    {
-//        return $this->utilisateurs;
-//    }
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
 
     public function addUtilisateur(Utilisateur $utilisateur): static
     {
