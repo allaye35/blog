@@ -49,6 +49,15 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Assigner l'utilisateur connecté comme créateur de l'article
+            $user = $this->getUser();
+            if ($user) {
+                $article->setEmail($user->getEmail());
+            }
+
+            // Assigner la date de création
+            $article->setDateCreation(new \DateTime());
+
             // Récupération des mots-clés du formulaire
             $motsCles = $form->get('motsCles')->getData();
             $nouveauMotCle = $form->get('nouveauMotCle')->getData();
@@ -66,15 +75,6 @@ class ArticleController extends AbstractController
                 $article->addMotsCle($motCle);
             }
 
-            // Définir la date de création
-            $article->setDateCreation(new \DateTime());
-
-            // Définir l'email de l'utilisateur connecté
-            $user = $this->getUser();
-            if ($user) {
-                $article->setEmail($user->getEmail());
-            }
-
             $articleRepository->save($article, true);
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
@@ -87,13 +87,25 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, Article $article): Response
+    public function show(Request $request, Article $article, CommentaireRepository $commentaireRepository): Response
     {
+        $commentaire = new Commentaire();
+        $comment_form = $this->createForm(CommentaireType::class, $commentaire);
+        $comment_form->handleRequest($request);
+
+        if ($comment_form->isSubmitted() && $comment_form->isValid()) {
+            $commentaire->setArticle($article);
+            $commentaireRepository->save($commentaire, true);
+
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+        }
+
         $delete_form = $this->createDeleteForm($article);
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'delete_form' => $delete_form->createView(),
+            'comment_form' => $comment_form->createView(),
         ]);
     }
 
