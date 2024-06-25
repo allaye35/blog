@@ -15,7 +15,9 @@ use App\Repository\MotsClesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use phpDocumentor\Reflection\Types\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
+use App\Repository\CommentaireRepository;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 
 #[Route('/article')]
 #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
@@ -56,14 +58,26 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    #[Route('/{id}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Article $article, CommentaireRepository $commentaireRepository): Response
     {
-        $deleteForm = $this->createDeleteForm($article);
+        $commentaire = new Commentaire();
+        $comment_form = $this->createForm(CommentaireType::class, $commentaire);
+        $comment_form->handleRequest($request);
+
+        if ($comment_form->isSubmitted() && $comment_form->isValid()) {
+            $commentaire->setArticle($article);
+            $commentaireRepository->save($commentaire, true);
+
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        $delete_form = $this->createDeleteForm($article);
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $delete_form->createView(),
+            'comment_form' => $comment_form->createView(),
         ]);
     }
 
@@ -100,9 +114,9 @@ class ArticleController extends AbstractController
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('app_article_delete', ['id' => $article->getId()]))
             ->setMethod('DELETE')
-            ->add('submit', SubmitType::class, [
+            ->add('delete', SubmitType::class, [
                 'label' => 'Supprimer',
-                'attr' => ['class' => 'btn btn-danger btn-sm mx-1']
+                'attr' => ['class' => 'btn btn-danger']
             ])
             ->getForm();
     }

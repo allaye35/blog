@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\MotsCles;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -106,6 +108,13 @@ class ArticleType extends AbstractType
 //                // Autres options éventuelles pour le champ...
 //            ])
 
+            ->add('motsCles', EntityType::class, [
+                'class' => MotsCles::class,
+                'choice_label' => 'mot',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'Mots Clés',
+            ]);
         ;
     }
 

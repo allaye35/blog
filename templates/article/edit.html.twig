@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Article{% endblock %}
+{% block title %}Modifier l'article{% endblock %}
 
 {% block body %}
-    <h1>Edit Article</h1>
-
-    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_article_index') }}">back to list</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+    <div class="container mt-4">
+        <h2 class="text-center">Modifier l'article</h2>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.titre) }}
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.titre) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu) }}
+            {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+            {{ form_errors(form.contenu) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.motsCles) }}
+            {{ form_widget(form.motsCles, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.motsCles) }}
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

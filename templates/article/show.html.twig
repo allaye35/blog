@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <h2 class="mb-0">Article</h2>
+                <h3>Article</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -23,29 +23,29 @@
                         <td>{{ article.contenu }}</td>
                     </tr>
                     <tr>
-                        <th>Date de Création</th>
+                        <th>Date de création</th>
                         <td>{{ article.dateCreation|date('Y-m-d H:i:s') }}</td>
                     </tr>
                 </table>
-                <div class="d-flex justify-content-between">
-                    <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_article_index') }}" class="btn btn-secondary mr-2">Retour à la liste</a>
                     <div>
-                        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning">Modifier</a>
+                        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2">Modifier</a>
                         {{ form_start(delete_form, {'attr': {'style': 'display:inline'}}) }}
                         <input type="submit" value="Supprimer" class="btn btn-danger">
                         {{ form_end(delete_form) }}
                     </div>
                 </div>
-                <hr>
-                <h4>Commentaires</h4>
-                {{ form_start(comment_form) }}
-                <div class="form-group">
-                    {{ form_label(comment_form.commentaire) }}
-                    {{ form_widget(comment_form.commentaire, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-                {{ form_end(comment_form) }}
             </div>
         </div>
+        <hr>
+        <h4>Commentaires</h4>
+        {{ form_start(comment_form) }}
+        <div class="form-group">
+            {{ form_label(comment_form.commentaire) }}
+            {{ form_widget(comment_form.commentaire, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(comment_form) }}
     </div>
 {% endblock %}
