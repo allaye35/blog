@@ -1,81 +1,47 @@
 body {
-    font-family: 'Arial', sans-serif;
-}
-
-.container {
-    margin-top: 20px;
-    max-width: 900px;
-    margin: auto;
+    font-family: Arial, sans-serif;
 }
 
 .card {
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
-.card-header {
-    background-color: #007bff;
-    color: white;
-    padding: 15px;
-    border-bottom: 1px solid #007bff;
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-.card-body {
-    padding: 20px;
+.card-text {
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
-.table {
-    margin-bottom: 20px;
+.comment {
+    border-left: 4px solid #007bff;
+    padding-left: 1rem;
 }
 
-.table th, .table td {
-    vertical-align: middle;
+.comment strong {
+    color: #007bff;
 }
 
 .btn-primary {
     background-color: #007bff;
-    border: none;
+    border-color: #007bff;
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
+    border-color: #004085;
 }
 
 .btn-secondary {
     background-color: #6c757d;
-    border: none;
+    border-color: #6c757d;
 }
 
 .btn-secondary:hover {
     background-color: #5a6268;
-}
-
-.btn-warning {
-    background-color: #ffc107;
-    border: none;
-    color: #212529;
-}
-
-.btn-warning:hover {
-    background-color: #e0a800;
-    color: #212529;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    border: none;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-control {
-    border-radius: 0.25rem;
+    border-color: #545b62;
 }

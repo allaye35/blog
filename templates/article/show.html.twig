@@ -3,48 +3,48 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+    <h1 class="mt-5">{{ article.titre }}</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Title</th>
-            <td>{{ article.titre }}</td>
-        </tr>
-        <tr>
-            <th>Contenu</th>
-            <td>{{ article.contenu }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">Contenu</h4>
+            <p class="card-text">{{ article.contenu }}</p>
+        </div>
+    </div>
 
-    <h5>Commentaires</h5>
-    <div class="card-body">
-        {% for commentaire in article.commentaires %}
-            <div class="mb-3">
-                {% if commentaire.utilisateurs|length > 0 %}
-                    {% for utilisateur in commentaire.utilisateurs %}
-                        <strong>{{ utilisateur.email }}</strong> :
-                    {% endfor %}
-                {% else %}
-                    <strong>Utilisateur inconnu</strong> :
-                {% endif %}
-                <p>{{ commentaire.commentaire }}</p>
+    <h5 class="mt-5">Commentaires</h5>
+    <div class="card mt-3">
+        <div class="card-body">
+            {% for commentaire in article.commentaires %}
+                <div class="comment mb-3 p-3 bg-light rounded">
+                    {% if commentaire.utilisateurs|length > 0 %}
+                        {% for utilisateur in commentaire.utilisateurs %}
+                            <strong>{{ utilisateur.email }}</strong> :
+                        {% endfor %}
+                    {% else %}
+                        <strong>Utilisateur inconnu</strong> :
+                    {% endif %}
+                    <p class="mt-2">{{ commentaire.commentaire }}</p>
+                </div>
                 <hr>
+            {% else %}
+                <p>Aucun commentaire pour cet article.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h4 class="mt-5">Ajouter un commentaire</h4>
+    <div class="card mt-3">
+        <div class="card-body">
+            {{ form_start(comment_form) }}
+            <div class="form-group">
+                {{ form_label(comment_form.commentaire) }}
+                {{ form_widget(comment_form.commentaire, {'attr': {'class': 'form-control'}}) }}
             </div>
-        {% else %}
-            <p>Aucun commentaire pour cet article.</p>
-        {% endfor %}
+            <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+            {{ form_end(comment_form) }}
+        </div>
     </div>
 
-    <h4>Ajouter un commentaire</h4>
-    {{ form_start(comment_form) }}
-    <div class="form-group">
-        {{ form_label(comment_form.commentaire) }}
-        {{ form_widget(comment_form.commentaire, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-    {{ form_end(comment_form) }}
-
-    <a href="{{ path('app_article_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    <a href="{{ path('app_article_index') }}" class="btn btn-secondary mt-5">Retour à la liste</a>
 {% endblock %}
