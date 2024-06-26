@@ -1,26 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Role{% endblock %}
+{% block title %}Rôle{% endblock %}
 
 {% block body %}
-    <h1>Role</h1>
+    <div class="container mt-5">
+        <h1 class="text-center">Détails du Rôle</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ role.id }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ role.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="card mt-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Id</th>
+                        <td>{{ role.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ role.description }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <a href="{{ path('app_role_index') }}">back to list</a>
-
-    <a href="{{ path('app_role_edit', {'id': role.id}) }}">edit</a>
-
-    {{ include('role/_delete_form.html.twig') }}
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('app_role_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <a href="{{ path('app_role_edit', {'id': role.id}) }}" class="btn btn-warning">Modifier</a>
+            {{ include('role/_delete_form.html.twig', {'class': 'btn btn-danger'}) }}
+        </div>
+    </div>
 {% endblock %}

@@ -2124,7 +2124,7 @@
 
     if (arrowElement == null) {
       return;
-    } // CSS selector
+    } //css selector
 
 
     if (typeof arrowElement === 'string') {

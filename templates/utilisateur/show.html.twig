@@ -4,30 +4,36 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Détails de l'utilisateur</h1>
+        <h1 class="text-center">Détails de l'utilisateur</h1>
 
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ utilisateur.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ utilisateur.email }}</td>
-            </tr>
-            <tr>
-                <th>Date de Création</th>
-                <td>{{ utilisateur.dateCreationUtilisateur|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card mt-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Id</th>
+                        <td>{{ utilisateur.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{ utilisateur.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Date de Création</th>
+                        <td>{{ utilisateur.dateCreationUtilisateur|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary">Retour à la liste</a>
-        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">Modifier</a>
-        <form method="post" action="{{ path('app_utilisateur_delete', {'id': utilisateur.id}) }}" style="display:inline-block;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
-            <button class="btn btn-danger">Supprimer</button>
-        </form>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">Modifier</a>
+            <form method="post" action="{{ path('app_utilisateur_delete', {'id': utilisateur.id}) }}" style="display:inline-block;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
+                <button class="btn btn-danger">Supprimer</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

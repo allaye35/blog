@@ -21,16 +21,8 @@ class CommentaireController extends AbstractController
     #[Route('/', name: 'app_commentaire_index', methods: ['GET'])]
     public function index(CommentaireRepository $commentaireRepository): Response
     {
-        $commentaires = $commentaireRepository->findAll();
-        $deleteForms = [];
-
-        foreach ($commentaires as $commentaire) {
-            $deleteForms[$commentaire->getId()] = $this->createDeleteForm($commentaire)->createView();
-        }
-
         return $this->render('commentaire/index.html.twig', [
-            'commentaires' => $commentaires,
-            'delete_forms' => $deleteForms,
+            'commentaires' => $commentaireRepository->findAll(),
         ]);
     }
 
@@ -42,7 +34,6 @@ class CommentaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentaire->setUtilisateur($this->getUser());
             $commentaireRepository->save($commentaire, true);
 
             return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
@@ -86,7 +77,7 @@ class CommentaireController extends AbstractController
     #[Route('/{id}', name: 'app_commentaire_delete', methods: ['POST'])]
     public function delete(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $commentaire->getId(), $request->request->get('_token'))) {
             $commentaireRepository->remove($commentaire, true);
         }
 
@@ -100,7 +91,7 @@ class CommentaireController extends AbstractController
             ->setMethod('DELETE')
             ->add('submit', SubmitType::class, [
                 'label' => 'Supprimer',
-                'attr' => ['class' => 'btn btn-danger btn-sm mx-1']
+                'attr' => ['class' => 'btn btn-danger']
             ])
             ->getForm();
     }

@@ -21,15 +21,20 @@
                     <td class="text-center">
                         <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-info btn-sm mx-1">Afficher</a>
                         <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-warning btn-sm mx-1">Modifier</a>
-                        {{ form_start(delete_forms[commentaire.id], {'attr': {'style': 'display:inline'}}) }}
-                        <input type="submit" value="Supprimer" class="btn btn-danger btn-sm mx-1">
-                        {{ form_end(delete_forms[commentaire.id]) }}
+                        <form method="post" action="{{ path('app_commentaire_delete', {'id': commentaire.id}) }}" style="display:inline-block;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm mx-1">Supprimer</button>
+                        </form>
                     </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucun commentaire trouvé.</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <div class="text-center">
+        <div class="text-center mt-4">
             <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">Créer un nouveau commentaire</a>
         </div>
     </div>

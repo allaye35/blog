@@ -137,7 +137,7 @@ class ArticleController extends AbstractController
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('app_article_delete', ['id' => $article->getId()]))
             ->setMethod('DELETE')
-            ->add('delete', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => 'Supprimer',
                 'attr' => ['class' => 'btn btn-danger']
             ])

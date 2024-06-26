@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Utilisateur{% endblock %}
+{% block title %}Modifier un utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Edit Utilisateur</h1>
+    <div class="container mt-4">
+        <h1 class="text-center">Modifier l'utilisateur</h1>
 
-    {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.password) }}
+        </div>
+        <button class="btn btn-primary">Mettre à jour</button>
+        {{ form_end(form) }}
 
+        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary mt-2">Retour à la liste</a>
 
-    {{ include('utilisateur/_delete_form.html.twig') }}
+        <form method="post" action="{{ path('app_utilisateur_delete', {'id': utilisateur.id}) }}" style="display:inline-block;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
+            <button class="btn btn-danger mt-2">Supprimer</button>
+        </form>
+    </div>
 {% endblock %}

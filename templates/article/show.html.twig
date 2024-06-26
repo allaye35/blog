@@ -12,6 +12,15 @@
         </div>
     </div>
 
+    <div class="mt-4">
+        <a href="{{ path('app_article_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning">Modifier</a>
+        <form method="post" action="{{ path('app_article_delete', {'id': article.id}) }}" style="display:inline-block;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet article?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+            <button class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+
     <h5 class="mt-5">Commentaires</h5>
     <div class="card mt-3">
         <div class="card-body">
@@ -45,6 +54,4 @@
             {{ form_end(comment_form) }}
         </div>
     </div>
-
-    <a href="{{ path('app_article_index') }}" class="btn btn-secondary mt-5">Retour à la liste</a>
 {% endblock %}
